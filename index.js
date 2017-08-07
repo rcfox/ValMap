@@ -4,6 +4,9 @@ class ValMap extends Map {
 
         this.keyStore = {};
 
+        // Using toString could be problematic if it doesn't sufficiently identify an object.
+        this.disableToStringHash = false;
+
         if (opt_iterable) {
             if (opt_iterable[Symbol.iterator] === 'function') {
                 for (let [key, value] of opt_iterable) {
@@ -23,7 +26,7 @@ class ValMap extends Map {
             return key.getValMapHash();
         }
         // The default toString function isn't useful to identify an object.
-        if (key.toString !== Object.prototype.toString) {
+        if (!this.disableToStringHash && key.toString !== Object.prototype.toString) {
             return key.toString();
         }
         return JSON.stringify(key);
