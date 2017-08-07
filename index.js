@@ -5,8 +5,12 @@ class ValMap extends Map {
         this.keyStore = {};
 
         if (opt_iterable) {
-            for (let [key, value] of opt_iterable) {
-                this.set(key, value);
+            if (opt_iterable[Symbol.iterator] === 'function') {
+                for (let [key, value] of opt_iterable) {
+                    this.set(key, value);
+                }
+            } else {
+                throw new Error('expected iterable of [ [key, value], ... ]');
             }
         }
     }
