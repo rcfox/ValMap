@@ -8,7 +8,7 @@ class ValMap extends Map {
         this.disableToStringHash = false;
 
         if (opt_iterable) {
-            if (opt_iterable[Symbol.iterator] === 'function') {
+            if (typeof opt_iterable[Symbol.iterator] === 'function') {
                 for (let [key, value] of opt_iterable) {
                     this.set(key, value);
                 }
