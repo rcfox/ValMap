@@ -1,0 +1,22 @@
+{
+  "name": "val-map",
+  "version": "1.0.0",
+  "description": "A variant of the ES6 Map that allows using key objects by value instead of by reference.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tbd"
+  },
+  "keywords": [
+    "map",
+    "es6"
+  ],
+  "author": "Ryan Fox",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^2.7.0"
+  }
+}
