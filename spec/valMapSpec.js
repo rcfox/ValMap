@@ -65,6 +65,14 @@ describe('ValMap', function() {
         it('should not be able to lookup with a key that has different contents', function() {
             expect(valmap.get(keyC)).not.toEqual(valmap.get(keyA));
         });
+
+        // This probably isn't desirable, but it is expected.
+        it('should get a false positive lookup when getting a missing value, ' +
+            'but undefined has been used as a key', function() {
+            valmap.preventUndefinedKey = false;
+            valmap.set(undefined, 'undefined value');
+            expect(valmap.get('adfdsgfdsf')).toEqual(valmap.get(undefined));
+        });
     });
 
     describe('set()', function() {
@@ -79,6 +87,21 @@ describe('ValMap', function() {
             valmap.set(keyC, 'bar');
             expect(valmap.get(keyA)).toEqual('foo');
             expect(valmap.get(keyC)).toEqual('bar');
+        });
+
+        it('should disallow undefined as a key by default', function() {
+            const setUndefined = function() {
+                valmap.set(undefined, 1);
+            };
+            expect(setUndefined).toThrowError();
+        });
+
+        it('should allow undefined as a key when requested', function() {
+            const setUndefined = function() {
+                valmap.set(undefined, 1);
+            };
+            valmap.preventUndefinedKey = false;
+            expect(setUndefined).not.toThrowError();
         });
     });
 

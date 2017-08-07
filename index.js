@@ -7,6 +7,10 @@ class ValMap extends Map {
         // Using toString could be problematic if it doesn't sufficiently identify an object.
         this.disableToStringHash = false;
 
+        // Using undefined as a key will result in any lookup-misses returning undefined's value.
+        // That's probably a bad thing, but Map itself does work with undefined, so we can enable if needed.
+        this.preventUndefinedKey = true;
+
         if (opt_iterable) {
             if (typeof opt_iterable[Symbol.iterator] === 'function') {
                 for (let [key, value] of opt_iterable) {
@@ -39,6 +43,10 @@ class ValMap extends Map {
     }
 
     set(key, value) {
+        if (key === undefined && this.preventUndefinedKey) {
+            throw new Error('Using undefined as a key will result in false positive lookups for missing keys. ' +
+                            'If you really need this, set preventUndefinedKey = false on this ValMap.');
+        }
         const keyHash = ValMap._getKeyHash(key);
         if (this.keyStore[keyHash] === undefined) {
             this.keyStore[keyHash] = key;
