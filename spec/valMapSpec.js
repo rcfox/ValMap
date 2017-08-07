@@ -24,8 +24,7 @@ describe('ValMap', function() {
     var valmap;
 
     beforeEach(function() {
-        valmap = new ValMap();
-        valmap.set(keyA, 'foo');
+        valmap = new ValMap([ [keyA, 'foo'] ]);
     });
 
     it('should be a Map subclass', function() {
