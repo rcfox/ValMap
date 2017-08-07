@@ -42,7 +42,7 @@ If you don't want to define getValMapHash, and your toString isn't a good enough
 `mymap.disableToStringHash = true` to skip the toString call and dump to JSON.
 
 ```
-const mymap = new Map();
+const mymap = new ValMap();
 mymap.set({foo: 'bar'}, 'quz');
 mymap.get({foo: 'bar'}) === 'quz'; // true
 ```
