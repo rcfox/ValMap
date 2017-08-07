@@ -22,7 +22,7 @@ class ValMap extends Map {
         }
     }
 
-    static _getKeyHash(key) {
+    _getKeyHash(key) {
         if (key === null || key === undefined) {
             return key;
         }
@@ -37,7 +37,7 @@ class ValMap extends Map {
     }
 
     get(key) {
-        const keyHash = ValMap._getKeyHash(key);
+        const keyHash = this._getKeyHash(key);
         var actualKey = this.keyStore[keyHash];
         return super.get(actualKey);
     }
@@ -47,7 +47,7 @@ class ValMap extends Map {
             throw new Error('Using undefined as a key will result in false positive lookups for missing keys. ' +
                             'If you really need this, set preventUndefinedKey = false on this ValMap.');
         }
-        const keyHash = ValMap._getKeyHash(key);
+        const keyHash = this._getKeyHash(key);
         if (this.keyStore[keyHash] === undefined) {
             this.keyStore[keyHash] = key;
         }
@@ -56,13 +56,13 @@ class ValMap extends Map {
     }
 
     has(key) {
-        const keyHash = ValMap._getKeyHash(key);
+        const keyHash = this._getKeyHash(key);
         var actualKey = this.keyStore[keyHash];
         return super.has(actualKey);
     }
 
     delete(key) {
-        const keyHash = ValMap._getKeyHash(key);
+        const keyHash = this._getKeyHash(key);
         var actualKey = this.keyStore[keyHash];
         delete this.keyStore[keyHash];
         return super.has(actualKey);

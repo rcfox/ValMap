@@ -131,4 +131,56 @@ describe('ValMap', function() {
             expect(entries.length).toEqual(2);
         });
     });
+
+    describe('hashing', function() {
+        class BarePoint {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+        class ToStringPoint extends BarePoint {
+            toString() {
+                return this.x + ',' + this.y;
+            }
+        }
+        class HashPoint extends ToStringPoint {
+            getValMapHash() {
+                return 'Point(' + this.x + ',' + this.y + ')';
+            }
+        }
+
+        it('should use getValMapHash if available', function() {
+            const p = new HashPoint(1, 2);
+            const hash = valmap._getKeyHash(p);
+            expect(hash).toEqual('Point(1,2)');
+        });
+
+        it('should use toString if overriden, and getValMapHash is not defined', function() {
+            const p = new ToStringPoint(1, 2);
+            const hash = valmap._getKeyHash(p);
+            expect(hash).toEqual('1,2');
+        });
+
+        it('should convert to JSON is nothing else is available', function() {
+            const p = new BarePoint(1, 2);
+            const hash = valmap._getKeyHash(p);
+            expect(hash).toEqual('{"x":1,"y":2}');
+        });
+
+        it('should not attempt to use toString if disableToStringHash is set', function() {
+            valmap.disableToStringHash = true;
+            const p = new ToStringPoint(1, 2);
+            const hash = valmap._getKeyHash(p);
+            expect(hash).toEqual('{"x":1,"y":2}');
+        });
+
+        it('should not attempt to hash null or undefined', function() {
+            const nullHash = valmap._getKeyHash(null);
+            expect(nullHash).toBeNull();
+
+            const undefinedHash = valmap._getKeyHash(undefined);
+            expect(undefinedHash).not.toBeDefined();
+        });
+    });
 });
