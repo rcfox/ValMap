@@ -38,7 +38,7 @@ class ValMap extends Map {
 
     get(key) {
         const keyHash = this._getKeyHash(key);
-        var actualKey = this.keyStore[keyHash];
+        const actualKey = this.keyStore[keyHash];
         return super.get(actualKey);
     }
 
@@ -51,19 +51,19 @@ class ValMap extends Map {
         if (this.keyStore[keyHash] === undefined) {
             this.keyStore[keyHash] = key;
         }
-        var actualKey = this.keyStore[keyHash];
+        const actualKey = this.keyStore[keyHash];
         return super.set(actualKey, value);
     }
 
     has(key) {
         const keyHash = this._getKeyHash(key);
-        var actualKey = this.keyStore[keyHash];
+        const actualKey = this.keyStore[keyHash];
         return super.has(actualKey);
     }
 
     delete(key) {
         const keyHash = this._getKeyHash(key);
-        var actualKey = this.keyStore[keyHash];
+        const actualKey = this.keyStore[keyHash];
         delete this.keyStore[keyHash];
         return super.delete(actualKey);
     }
