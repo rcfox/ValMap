@@ -65,7 +65,7 @@ class ValMap extends Map {
         const keyHash = this._getKeyHash(key);
         var actualKey = this.keyStore[keyHash];
         delete this.keyStore[keyHash];
-        return super.has(actualKey);
+        return super.delete(actualKey);
     }
 }
 module.exports = ValMap;

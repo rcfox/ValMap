@@ -44,6 +44,8 @@ describe('ValMap', function() {
            expect(valmap.has(keyA)).toBeTruthy();
            expect(valmap.delete(keyB)).toBeDefined();
            expect(valmap.has(keyA)).toBeFalsy();
+
+           expect(valmap.size).toEqual(0);
        });
     });
 
